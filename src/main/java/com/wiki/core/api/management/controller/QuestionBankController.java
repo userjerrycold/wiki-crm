@@ -1,11 +1,15 @@
 package com.wiki.core.api.management.controller;
 
+import com.wiki.core.api.management.request.QuestionBankQueryRequest;
 import com.wiki.core.common.reponse.DataResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.wiki.core.common.reponse.PageDataResponse;
+import com.wiki.core.domain.model.dto.QuestionBankDTO;
+import com.wiki.core.domain.service.QuestionBankService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * QuestionBankController
@@ -13,16 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
  * @author qian.hu
  * @date 2023/2/9 15:57
  */
+@Api(value = "QuestionBankController 题库")
 @RestController
 @RequestMapping("/question_bank")
 public class QuestionBankController {
 
-    private Logger log = LoggerFactory.getLogger(getClass());
+    @Resource
+    private QuestionBankService questionBankService;
 
-    @GetMapping("/test")
-    public DataResponse<Boolean> test(){
-        return DataResponse.of(Boolean.TRUE);
+
+    @ApiOperation(value = "根据ID查询题目信息")
+    @GetMapping("/{id}")
+    public DataResponse<QuestionBankDTO> findById(@PathVariable("id") Long id){
+        return DataResponse.of(questionBankService.findById(id));
     }
+
+    @ApiOperation(value = "查询所有题目信息")
+    @PostMapping
+    public PageDataResponse<QuestionBankDTO> getAllQuestionBank(@RequestBody QuestionBankQueryRequest questionBankQueryRequest){
+        return PageDataResponse.of(new QuestionBankDTO(),0,1,1);
+    }
+
 
 
 }

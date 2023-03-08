@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wiki.core.domain.dao.QuestionBankMapper">
+
+    <resultMap id="view_questions" type="com.wiki.core.domain.model.pojo.QuestionBank">
+        <result column="id" property="id" />
+        <result column="is_java" property="isJava" />
+        <result column="type" property="type"/>
+        <result column="author" property="author"/>
+        <result column="order" property="order"/>
+        <result column="title" property="title"/>
+        <result column="level" property="level"/>
+        <result column="hint" property="hint"/>
+        <result column="answer" property="answer"/>
+        <result column="create_dt" property="createDt" jdbcType="DATE"/>
+        <result column="update_dt" property="updateDt" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="findById" parameterType="Long" resultMap="view_questions">
+        select * from question_bank where id = #{id}
+    </select>
+
+</mapper>

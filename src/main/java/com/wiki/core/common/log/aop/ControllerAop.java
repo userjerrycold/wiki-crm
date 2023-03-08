@@ -1,12 +1,19 @@
 package com.wiki.core.common.log.aop;
 
+import com.alibaba.fastjson.JSONObject;
+import com.sun.javafx.binding.StringFormatter;
 import com.wiki.core.common.exception.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ControllerAop
@@ -26,8 +33,8 @@ public class ControllerAop {
 
     @Around("privilege()")
     public Object around(ProceedingJoinPoint pjd) throws Throwable {
-        // 获取方法名
-        String className = pjd.getSignature().getClass().getName();
+        // 获取类全限定名
+        String className = pjd.getSignature().getDeclaringTypeName();
         // 获取执行的方法名称
         String methodName = pjd.getSignature().getName();
         /** 初始化日志打印 */
@@ -38,20 +45,19 @@ public class ControllerAop {
         long start = System.currentTimeMillis();
         // 获取方法参数
         Object[] args = pjd.getArgs();
-        StringBuilder params = new StringBuilder("前端请求参数为:");
-        //获取请求参数集合并进行遍历拼接
-        for (Object object : args) {
-            params.append(object.toString()).append(",");
+        List<String> params = new ArrayList<>(args.length);
+        String paramStr = "" ;
+        if(!ObjectUtils.isEmpty(args)){
+            for (Object arg : args) {
+                params.add(JSONObject.toJSONString(arg));
+            }
+            paramStr = String.join(",",params);
         }
-        params = new StringBuilder(params.substring(0, params.length() - 1));
-        //打印请求参数参数
-        log.info(className+"类的"+methodName + "的" + params);
-        // 执行目标方法
         result = pjd.proceed();
-        // 打印返回报文
-        log.info("方法返回报文为:" + (result instanceof Result ? (Result) result : result));
-        // 获取执行完的时间
-        log.info(methodName + "方法执行时长为:" + (System.currentTimeMillis() - start));
+
+        Object resultObject = result instanceof Result ? result : result;
+
+        log.info(String.format("%n Class:  %s %n Method: %s  %n Request: %s %n Response: %s %n Take time: %sms",className,methodName,paramStr,JSONObject.toJSON(resultObject).toString(), (System.currentTimeMillis() - start)));
         return result;
     }
 
@@ -66,7 +72,7 @@ public class ControllerAop {
     }
 
     @AfterThrowing(value="privilege()",throwing="ex")
-    public void exce(JoinPoint joinPoint, Exception ex) {
+    public void exec(JoinPoint joinPoint, Exception ex) {
 
     }
 }

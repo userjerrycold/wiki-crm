@@ -15,8 +15,8 @@ CREATE TABLE `wikis`
     `status`          tinyint(4) NOT NULL COMMENT '状态：0启用中 1停用中',
     `operator_id`     bigint(20) NOT NULL comment '最后修改人id',
     `operator_name`   varchar(64) NOT NULL comment '最后修改人姓名',
-    `created_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='wiki';
@@ -33,8 +33,8 @@ CREATE TABLE `schedules`
     `order`         int(11)   DEFAULT NULL COMMENT '顺序',
     `comment`         text  DEFAULT NULL COMMENT '备注',
     `status`          tinyint(4) NOT NULL COMMENT '状态：0待办 1已完成',
-    `created_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='待办事宜表';
@@ -52,8 +52,8 @@ CREATE TABLE `question_bank`
     `level`         tinyint(4)  DEFAULT NULL COMMENT '难度等级：0星 1星 2星 3星 4星 5星',
     `hint`          varchar(64) NOT NULL COMMENT '简短的提示信息',
     `answer`          text  DEFAULT NULL COMMENT '标准答案',
-    `created_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='智能题库';
@@ -68,8 +68,8 @@ CREATE TABLE `question_statistics`
     `operator_id`        bigint(20)  NOT NULL COMMENT '答题人id',
     `score`         int(11)   NOT NULL COMMENT '答题人自己最近一次评分',
     `comment`         text  DEFAULT NULL COMMENT '答题人备注',
-    `created_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='题目统计';
@@ -87,8 +87,8 @@ CREATE TABLE `recommend_questions`
     `level`         tinyint(4)  DEFAULT NULL COMMENT '难度等级：0星 1星 2星 3星 4星 5星',
     `hint`          varchar(64) NOT NULL COMMENT '简短的提示信息',
     `answer`          text  DEFAULT NULL COMMENT '标准答案',
-    `created_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updated_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `create_dt`      datetime     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_dt`      datetime     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='每日推荐题库';
