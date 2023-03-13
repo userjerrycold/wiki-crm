@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,9 @@ public class ControllerAop {
         String paramStr = "" ;
         if(!ObjectUtils.isEmpty(args)){
             for (Object arg : args) {
-                params.add(JSONObject.toJSONString(arg));
+                if(arg instanceof MultipartFile){
+                    params.add(((MultipartFile) arg).getOriginalFilename());
+                }else params.add(JSONObject.toJSONString(arg));
             }
             paramStr = String.join(",",params);
         }

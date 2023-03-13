@@ -1,23 +1,20 @@
 package com.wiki.core.api.management.request;
 
+import com.wiki.core.domain.model.pojo.QuestionBank;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.sql.Date;
+import org.springframework.beans.BeanUtils;
 
 /**
- * QuestionBankQueryRequest
+ * QuestionBankSetRequest
  *
  * @author qian.hu
- * @date 2023/3/8 11:28
+ * @date 2023/3/8 17:38
  */
-@ApiModel("QuestionBankQueryRequest")
 @Data
-public class QuestionBankQueryRequest extends BaseRequest{
-
-    @ApiModelProperty("id")
-    private Long id;
+@ApiModel("QuestionBankSetRequest")
+public class QuestionBankSetRequest {
 
     @ApiModelProperty("判断是否是java类型")
     private Boolean isJava;
@@ -36,11 +33,16 @@ public class QuestionBankQueryRequest extends BaseRequest{
     @ApiModelProperty("题目")
     private String title;
 
+    @ApiModelProperty("标准答案")
+    private String answer;
+
     @ApiModelProperty("难度等级：0星 1星 2星 3星 4星 5星")
     private Byte level;
 
-    private Date createDt;
 
-    private Date updateDt;
-
+    public static QuestionBank of(QuestionBankSetRequest questionBankSetRequest){
+        QuestionBank questionBank = new QuestionBank();
+        BeanUtils.copyProperties(questionBankSetRequest,questionBank);
+        return questionBank;
+    }
 }

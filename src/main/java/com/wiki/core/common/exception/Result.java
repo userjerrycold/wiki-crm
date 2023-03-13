@@ -1,7 +1,6 @@
 package com.wiki.core.common.exception;
 
 import lombok.Data;
-import org.apache.logging.log4j.message.StringFormattedMessage;
 
 /**
  * Result
@@ -20,4 +19,5 @@ public class Result {
         this.code = code;
         this.message = message;
     }
+
 }

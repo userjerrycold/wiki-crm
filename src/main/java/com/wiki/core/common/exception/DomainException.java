@@ -16,6 +16,11 @@ public class DomainException extends RuntimeException{
         this.code = code;
     }
 
+    public DomainException(String message) {
+        super(message);
+        this.code = 400;
+    }
+
     public DomainException(String message, Integer code) {
         super(message);
         this.code = code;
@@ -35,5 +40,6 @@ public class DomainException extends RuntimeException{
         super(message, cause, enableSuppression, writableStackTrace);
         this.code = code;
     }
+
 
 }

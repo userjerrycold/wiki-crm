@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * BaseRequest
  *
@@ -13,8 +15,10 @@ import lombok.Data;
 @Data
 public class BaseRequest {
 
+    @NotNull(message = "page is empty")
     private Integer page;
 
+    @NotNull(message = "size is empty")
     private Integer size;
 
 }

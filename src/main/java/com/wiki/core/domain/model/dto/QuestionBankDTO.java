@@ -2,13 +2,18 @@ package com.wiki.core.domain.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wiki.core.domain.model.pojo.QuestionBank;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * QuestionBankDTO
@@ -16,6 +21,7 @@ import java.util.Date;
  * @author qian.hu
  * @date 2023/3/7 17:37
  */
+@ApiModel("QuestionBankDTO")
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,46 +30,30 @@ public class QuestionBankDTO {
 
     private Long id;
 
-    /**
-     * 判断是否是java类型
-     */
+    @ApiModelProperty("判断是否是java类型")
     private Boolean isJava;
 
-    /**
-     * 0JVM 1JMM 2JUC 3集合 4IO 5多线程 6mysql 7spring 8spring MVC
-     * 9spring boot 10 spring cloud 11DDD 12Mybatis 13redis 14dubbo
-     * 15zookeeper 16网络/IO 17k8s 18linux 19maven 20git
-     */
+    @ApiModelProperty("      0JVM 1JMM 2JUC 3集合 4IO 5多线程 6mysql 7spring 8spring MVC\n" +
+            "      9spring boot 10 spring cloud 11DDD 12Mybatis 13redis 14dubbo\n" +
+            "      15zookeeper 16网络/IO 17k8s 18linux 19maven 20git")
     private Byte type;
 
-    /**
-     * 作者
-     */
+    @ApiModelProperty("作者")
     private String author;
 
-    /**
-     * 顺序
-     */
-    private Integer order;
+    @ApiModelProperty("顺序")
+    private Integer qOrder;
 
-    /**
-     * 题目
-     */
+    @ApiModelProperty("题目")
     private String title;
 
-    /**
-     * 难度等级：0星 1星 2星 3星 4星 5星
-     */
+    @ApiModelProperty("难度等级：0星 1星 2星 3星 4星 5星")
     private Byte level;
 
-    /**
-     * 简短的提示信息
-     */
+    @ApiModelProperty("简短的提示信息")
     private String hint;
 
-    /**
-     * 标准答案
-     */
+    @ApiModelProperty("标准答案")
     private String answer;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
@@ -76,6 +66,14 @@ public class QuestionBankDTO {
         QuestionBankDTO questionBankDTO = new QuestionBankDTO();
         BeanUtils.copyProperties(questionBank,questionBankDTO);
         return questionBankDTO;
+    }
+
+    public static List<QuestionBankDTO> of(List<QuestionBank> questionBank){
+        List<QuestionBankDTO> questionBankDTOS = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(questionBank)){
+            questionBank.forEach(e-> questionBankDTOS.add(of(e)));
+        }
+        return questionBankDTOS;
     }
 
 }
