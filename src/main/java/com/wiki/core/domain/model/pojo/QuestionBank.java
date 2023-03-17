@@ -5,10 +5,15 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wiki.core.common.enums.NamedEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * QuestionBank
@@ -36,7 +41,7 @@ public class QuestionBank {
      * 15zookeeper 16网络/IO 17k8s 18linux 19maven 20git
      */
     @ExcelProperty("题目类型")
-    private Byte type;
+    private Integer type;
 
     /**
      * 作者
@@ -79,5 +84,59 @@ public class QuestionBank {
 
     @ExcelIgnore
     private Date updateDt;
+
+    @Getter
+    @AllArgsConstructor
+    public enum QuestionType implements NamedEnum {
+        JVM(0,"JVM"),
+        JMM(1,"JMM"),
+        JUC(2,"JUC"),
+        COLLECT(3,"集合"),
+        THREAD(4,"多线程"),
+        MYSQL(5,"Mysql"),
+        SPRING(6,"Spring"),
+        SPRING_MVC(7,"Spring MVC"),
+        SPRING_BOOT(8,"Spring Boot"),
+        SPRING_CLOUD(9,"Spring Cloud"),
+        MYBATIS(10,"Mybatis"),
+        REDIS(11,"Redis"),
+        IO(12,"网络IO"),
+        K8S(13,"k8s"),
+        LINUX(14,"Linux"),
+        MAVEN(15,"Maven"),
+        GIT(16,"Git");
+
+        private final Integer code;
+        private final String name;
+
+        public static QuestionType getEnumByKey(Integer code) {
+            if (null == code) {
+                return null;
+            }
+            for (QuestionType temp : QuestionType.values()) {
+                if (Objects.equals(temp.getCode(), code)) {
+                    return temp;
+                }
+            }
+            return null;
+        }
+
+        private static final Map<Integer, String> map = new HashMap<>();
+
+        static {
+            for (QuestionType tEnum : QuestionType.values()) {
+                map.put(tEnum.getCode(), tEnum.getName());
+            }
+        }
+
+    }
+
+    public void setType(QuestionType questionType){
+        this.type = questionType.code;
+    }
+
+    public QuestionType getType(){
+        return QuestionType.getEnumByKey(this.type);
+    }
 
 }

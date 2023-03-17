@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  * @author qian.hu
  * @date 2023/2/22 16:48
  */
-public interface NameEnum extends CodeEnum{
+public interface NamedEnum extends CodeEnum{
 
     @NotNull
     String getName();
